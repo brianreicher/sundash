@@ -14,3 +14,8 @@ class SunSpot(BaseComponent):
     def __init__(self):
         super().__init__()
 
+    def load_data(self) -> None:
+        pass
+
+
+

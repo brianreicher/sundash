@@ -9,6 +9,13 @@ import pandas as pd
 
 
 class BaseComponent():
-    def __init__(self):
+    def __init__(self, **kwargs):
+        self.data_loader = getattr(pd, kwargs)
+
+    def load_data(self):
         pass
+
+    def plot_data(self):
+        pass
+
 
