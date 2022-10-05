@@ -10,7 +10,8 @@ import pandas as pd
 
 class BaseComponent():
     def __init__(self, **kwargs):
-        self.data_loader = getattr(pd, kwargs)
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def load_data(self):
         pass
