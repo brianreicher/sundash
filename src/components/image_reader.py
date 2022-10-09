@@ -4,23 +4,16 @@ File: image_reader.py
 Description: HTML image reader to feed live images of the Sun into the dashboard
 """
 
-import requests
-import shutil
-import urllib
-
 class ImageReader:
 
-    def __init__(self, link):
-        self.link = link
-
-    def parse_html(self):
-        img = urllib.urlopen(self.link)
-        # with open(path, 'w') as f:
-        #     f.write(img.read())
-        print(img)
+    def __init__(self, img_name):
+        self.name = img_name
 
 
-
-
-img: ImageReader = ImageReader('http://soho.nascom.nasa.gov/data/realtime/eit_171/1024/latest.html')
-img.parse_html()
+    def set_im_link(self):
+        if self.name == 'SDO/HMI Continuum':
+            return 'https://soho.nascom.nasa.gov/data/realtime/hmi_igr/1024/latest.jpg'
+        elif self.name == 'SDO HMI Magnetogram':
+            return 'https://soho.nascom.nasa.gov/data/realtime/hmi_mag/1024/latest.jpg'
+        elif self.name == 'SOHO EIT 171':
+            return 'https://soho.nascom.nasa.gov/data/realtime/eit_171/1024/latest.jpg'

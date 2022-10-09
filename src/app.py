@@ -1,5 +1,6 @@
+from turtle import width
 from dash import Dash, html, dcc, Input, Output
-from components import sunspot
+from components import sunspot, image_reader
 
 # build app
 app = Dash(__name__)
@@ -19,16 +20,19 @@ app.layout = html.Div(style={'backgroundColor': colors['background']},
                                                 tooltip={"placement": "bottom", "always_visible": True},
                                                 id='range_slider'),
                                 html.P('Select Smoothing Factor'),
-                                dcc.RadioItems(options=['Daily Running Average', 'Yearly Average',
+                                dcc.Dropdown(['Daily Running Average (no data before 1820)', 'Yearly Average',
                                                         '13-month Smoothed Total'],
-                                               value='Daily Running Average', id='smooth_button'),
+                                               value='Daily Running Average (no data before 1820)', id='smooth_button'),
                                 dcc.Graph(id='variability_graph'),
                                 html.P('Select Variability Period'),
                                 dcc.Slider(1, 20, 1, value=11, id='var_slider'),    
                                 html.Br(),
                                 html.P('RealTime NASA Sun Images'),
-                                html.Img(id='sun_img'),
-                                html.Button(id='update_button')
+                                html.Img(id='sun_img', src='https://soho.nascom.nasa.gov/data/realtime/hmi_igr/1024/latest.jpg',
+                                        width=200),
+                                dcc.Dropdown(['SDO/HMI Continuum', 'SDO HMI Magnetogram', 'SOHO EIT 171'], value='SDO/HMI Continuum', 
+                                id='img_dropdown')
+                                # html.Button(id='update_button', value='Update Images')
                                 ]
                       )
 
@@ -50,10 +54,10 @@ def update_var_plot(years: list, var: int):
     return sun.plot_sunspot_variability()
 
 
-@app.callback(Output('sun_img', 'image'),
-              Input('update_button', 'n_clicks'))
-def grab_sun_img():
-    pass
+@app.callback(Output('sun_img', 'src'),
+              Input('img_dropdown', 'value'))
+def grab_sun_img(img_name) -> None:
+    return image_reader.ImageReader(img_name).set_im_link()
 
 
 app.run_server(debug=True)

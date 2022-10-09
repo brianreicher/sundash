@@ -22,7 +22,7 @@ class SunSpot:
         self.year_data.columns = ['year', 'month', 'decimal_year', 'nspots', 'null', 'null', 'null']
 
         # smoothing
-        if smooth_index == 'Daily Running Average':
+        if smooth_index == 'Daily Running Average (no data before 1820)':
             self.smooth_data = pd.read_csv('../data/SN_d_tot_V2.0.csv', sep=';')
             self.smooth_data.columns = ['year', 'month', 'day', 'decimal_year', 'nspots', 'SNerror', 'Nb observations', 'null']
             self.smooth_data['smoothed_spots'] = self.smooth_data['nspots'].rolling(100).mean()
