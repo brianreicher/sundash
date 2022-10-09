@@ -24,14 +24,15 @@ app.layout = html.Div(style={'backgroundColor': colors['background']},
                                                value='Daily Running Average', id='smooth_button'),
                                 dcc.Graph(id='variability_graph'),
                                 html.P('Select Variability Period'),
-                                dcc.Slider(1, 20, 1, value=11, id='var_slider'),
-                                html.
-                                html.P('RealTime NASA Sun Images')
+                                dcc.Slider(1, 20, 1, value=11, id='var_slider'),    
+                                html.Br(),
+                                html.P('RealTime NASA Sun Images'),
+                                html.Img(id='sun_img'),
+                                html.Button(id='update_button')
                                 ]
                       )
 
 
-# decorators, object and specific attribute
 @app.callback(Output('years_graph', 'figure'),
               Input('range_slider', 'value'),
               Input('smooth_button', 'value'),
@@ -47,6 +48,12 @@ def update_activity_plot(years: list, smoothing: str):
 def update_var_plot(years: list, var: int):
     sun = sunspot.SunSpot(year_range=years, period=var)
     return sun.plot_sunspot_variability()
+
+
+@app.callback(Output('sun_img', 'image'),
+              Input('update_button', 'n_clicks'))
+def grab_sun_img():
+    pass
 
 
 app.run_server(debug=True)
