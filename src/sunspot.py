@@ -69,7 +69,7 @@ class SunSpot:
     def clean_data_variability(self):
         """
             Helper function to apply period grouping on month_avg dataset for variability plot
-
+        
         :return:
             None
         """
