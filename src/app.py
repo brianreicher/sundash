@@ -1,8 +1,9 @@
 from dash import Dash, html, dcc, Input, Output
 import sunspot
 
-# build app
+# build app, server for heroku
 app = Dash(__name__)
+server = app.server
 
 # set app background color
 colors = {
